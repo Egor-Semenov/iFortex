@@ -19,9 +19,9 @@ namespace TestTask.Services.Implementations
 
         public Task<User> GetUser()
         {
-            var mostOrdersCount = _orderRepository.FindAll().GroupBy(x => x.UserId).ToList().Max(x => x.Count());
+            var maxOrdersCount = _orderRepository.FindAll().GroupBy(x => x.UserId).ToList().Max(x => x.Count());
 
-            return _userRepository.FindByCondition(x => x.Orders.Count() == mostOrdersCount).FirstAsync();
+            return _userRepository.FindByCondition(x => x.Orders.Count() == maxOrdersCount).FirstAsync();
         }
 
         public Task<List<User>> GetUsers() =>
