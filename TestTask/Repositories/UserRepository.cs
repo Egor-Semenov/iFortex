@@ -6,7 +6,7 @@ using TestTask.Repositories.Interfaces;
 
 namespace TestTask.Repositories
 {
-    public class UserRepository : IBaseRepository<User>
+    public sealed class UserRepository : IBaseRepository<User>
     {
         private readonly ApplicationDbContext _dbContext;
 

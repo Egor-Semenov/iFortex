@@ -6,7 +6,7 @@ using TestTask.Repositories.Interfaces;
 
 namespace TestTask.Services.Implementations
 {
-    public class UserService : IUserService
+    public sealed class UserService : IUserService
     {
         private readonly IBaseRepository<User> _userRepository;
         private readonly IBaseRepository<Order> _orderRepository;
@@ -17,14 +17,14 @@ namespace TestTask.Services.Implementations
             _orderRepository = orderRepository;
         }
 
-        public async Task<User> GetUser()
+        public Task<User> GetUser()
         {
             var mostOrdersCount = _orderRepository.FindAll().GroupBy(x => x.UserId).ToList().Max(x => x.Count());
 
-            return await _userRepository.FindByCondition(x => x.Orders.Count() == mostOrdersCount).FirstAsync();
+            return _userRepository.FindByCondition(x => x.Orders.Count() == mostOrdersCount).FirstAsync();
         }
 
-        public async Task<List<User>> GetUsers() =>
-            await _userRepository.FindByCondition(x => x.Status == UserStatus.Inactive).ToListAsync();
+        public Task<List<User>> GetUsers() =>
+            _userRepository.FindByCondition(x => x.Status == UserStatus.Inactive).ToListAsync();
     }
 }

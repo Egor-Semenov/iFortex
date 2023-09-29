@@ -5,7 +5,7 @@ using TestTask.Services.Interfaces;
 
 namespace TestTask.Services.Implementations
 {
-    public class OrderService : IOrderService
+    public sealed class OrderService : IOrderService
     {
         private readonly IBaseRepository<Order> _orderRepository;
 
@@ -14,10 +14,10 @@ namespace TestTask.Services.Implementations
             _orderRepository = orderRepository;
         }
 
-        public async Task<Order> GetOrder() =>
-            await _orderRepository.FindAll().OrderByDescending(x => x.Quantity * x.Price).FirstAsync();
+        public Task<Order> GetOrder() =>
+            _orderRepository.FindAll().OrderByDescending(x => x.Quantity * x.Price).FirstAsync();
 
-        public async Task<List<Order>> GetOrders() =>
-            await _orderRepository.FindByCondition(x => x.Quantity > 10).ToListAsync();
+        public Task<List<Order>> GetOrders() =>
+            _orderRepository.FindByCondition(x => x.Quantity > 10).ToListAsync();
     }
 }

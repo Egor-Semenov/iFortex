@@ -5,7 +5,7 @@ using TestTask.Repositories.Interfaces;
 
 namespace TestTask.Repositories
 {
-    public class OrderRepository : IBaseRepository<Order>
+    public sealed class OrderRepository : IBaseRepository<Order>
     {
         private readonly ApplicationDbContext _dbContext;
 
